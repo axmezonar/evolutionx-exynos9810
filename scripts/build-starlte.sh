@@ -61,9 +61,7 @@ if [[ "$PRODUCT_OUT" != /* ]]; then
   PRODUCT_OUT="$ANDROID_TOP/$PRODUCT_OUT"
 fi
 
-CLANG_BIN="$ANDROID_TOP/prebuilts/clang/kernel/linux-x86/clang-r416183b/bin"
 GCC_BIN="$ANDROID_TOP/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin"
-CLANG="$CLANG_BIN/clang"
 KERNEL_OUT="${KERNEL_OUT:-$PRODUCT_OUT/obj/KERNEL_OBJ}"
 if [[ "$KERNEL_OUT" != /* ]]; then
   KERNEL_OUT="$ANDROID_TOP/$KERNEL_OUT"
@@ -71,12 +69,10 @@ fi
 mkdir -p "$KERNEL_OUT" "$PRODUCT_OUT"
 KERNEL_OUT="$(cd "$KERNEL_OUT" && pwd)"
 
-export PATH="$CLANG_BIN:$GCC_BIN:$PATH"
+export PATH="$GCC_BIN:$PATH"
 KERNEL_BUILD_ARGS=(
   "ARCH=arm64"
-  "CROSS_COMPILE=aarch64-linux-androidkernel-"
-  "CLANG_TRIPLE=aarch64-linux-gnu-"
-  "CC=$CLANG"
+  "CROSS_COMPILE=aarch64-linux-android-"
   "SAMSUNG_BOOT_PAGESIZE=$KERNEL_PAGE_SIZE"
 )
 
