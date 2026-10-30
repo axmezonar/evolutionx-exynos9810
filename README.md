@@ -25,20 +25,17 @@ Install the Android build prerequisites from the current Android/Lineage build d
 
 ## Sync the Android 17 source
 
-From the directory where you want the Android source checkout:
+First clone this bring-up repository so you have the local manifest and build scripts. Then initialise the Evolution X source checkout and copy the manifest **before** running `repo sync`:
 
 ```bash
+git clone -b s9-bringup https://github.com/axmezonar/evolutionx-exynos9810.git
 repo init -u https://github.com/Evolution-X/manifest -b cnb --git-lfs
 mkdir -p .repo/local_manifests
 cp /path/to/evolutionx-exynos9810/local_manifests/exynos9810.xml .repo/local_manifests/exynos9810.xml
 repo sync -c -j4 --force-sync --no-clone-bundle --no-tags
 ```
 
-Use the S9 bring-up branch of this repository for the scripts while the changes are under review:
-
-```bash
-git clone -b s9-bringup https://github.com/axmezonar/evolutionx-exynos9810.git
-```
+Run the commands above from the directory where you want the Android source checkout. Replace `/path/to/evolutionx-exynos9810` with the actual location of the cloned bring-up repository.
 
 ## Prepare and build the S9
 
