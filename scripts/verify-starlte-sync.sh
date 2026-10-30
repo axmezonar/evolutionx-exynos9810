@@ -69,6 +69,7 @@ if (( ${#missing[@]} > 0 )); then
 fi
 
 required_executables=(
+  "prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang"
   "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ld"
   "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-objcopy"
   "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-as"
