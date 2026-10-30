@@ -15,8 +15,8 @@ for device in crownlte starlte star2lte; do
 
   cat > "$dir/evolution_${device}.mk" <<EOF
 # Evolution X product definition for ${device}
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+\$(call inherit-product, \$(SRC_TARGET_DIR)/product/core_64_bit.mk)
+\$(call inherit-product, \$(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, device/samsung/${device}/device.mk)
 $(call inherit-product, vendor/evolution/config/common_full_phone.mk)
 
@@ -30,7 +30,7 @@ EOF
 
   cat > "$dir/AndroidProducts.mk" <<EOF
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/evolution_${device}.mk
+    \$(LOCAL_DIR)/evolution_${device}.mk
 
 COMMON_LUNCH_CHOICES := \
     evolution_${device}-user \
