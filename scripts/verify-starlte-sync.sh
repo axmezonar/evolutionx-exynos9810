@@ -63,6 +63,7 @@ required_executables=(
   "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld"
   "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-objcopy"
   "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar"
+  "kernel/samsung/exynos9810/scripts/samsung_bootimg.py"
 )
 
 missing_executables=()
