@@ -18,7 +18,10 @@ device/samsung/starlte/lineage_starlte.mk
 device/samsung/starlte/AndroidProducts.mk
 device/samsung/exynos9810-common/BoardConfigCommon.mk
 device/samsung/exynos9810-common/common.mk
+kernel/samsung/exynos9810/Makefile
+kernel/samsung/exynos9810/arch/arm64/boot/Makefile
 kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig
+kernel/samsung/exynos9810/scripts/samsung_bootimg.py
 vendor/samsung/starlte/BoardConfigVendor.mk
 vendor/samsung/starlte/starlte-vendor.mk
 vendor/samsung/exynos9810-common/BoardConfigVendor.mk
@@ -39,6 +42,7 @@ hardware/lineage/generic-ims/ims.mk
 device/samsung_slsi/sepolicy/sepolicy.mk
 device/lineage/sepolicy/exynos/sepolicy.mk
 device/lineage/sepolicy/libion/sepolicy.mk
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-gcc
 prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld
 prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-objcopy
 prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar
