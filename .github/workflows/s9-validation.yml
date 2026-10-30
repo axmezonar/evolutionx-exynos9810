@@ -15,5 +15,7 @@ jobs:
         run: bash tests/test-prepare-device-trees.sh
       - name: Validate S9 sync preflight
         run: bash tests/test-verify-starlte-sync.sh
+      - name: Validate kernel build and staging orchestration
+        run: bash tests/test-build-starlte.sh
       - name: Validate local repo manifest XML
         run: python3 -c "import xml.etree.ElementTree as ET; ET.parse('local_manifests/exynos9810.xml'); print('Manifest XML is valid.')"
