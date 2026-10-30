@@ -97,6 +97,12 @@ if ! grep -Fq 'BOARD_MKBOOTIMG_ARGS := --header_version 0' "$COMMON_BOARD_CONFIG
   echo "ERROR: S9 boot configuration must use legacy Samsung boot header version 0." >&2
   exit 1
 fi
+for boot_arg in '--kernel_offset $(BOARD_KERNEL_OFFSET)' '--ramdisk_offset $(BOARD_KERNEL_RAMDISK_OFFSET)' '--tags_offset $(BOARD_KERNEL_TAGS_OFFSET)'; do
+  if ! grep -Fq -- "$boot_arg" "$COMMON_BOARD_CONFIG"; then
+    echo "ERROR: S9 boot configuration is missing Samsung mkbootimg argument: $boot_arg" >&2
+    exit 1
+  fi
+done
 
 for forbidden in BOARD_CUSTOM_BOOTIMG BOARD_CUSTOM_BOOTIMG_MK BOARD_KERNEL_SEPARATED_DT TARGET_CUSTOM_DTBTOOL TARGET_PREBUILT_KERNEL; do
   if grep -Eq "^[[:space:]]*${forbidden}[[:space:]]*([:+?]?=)" "$COMMON_BOARD_CONFIG"; then
