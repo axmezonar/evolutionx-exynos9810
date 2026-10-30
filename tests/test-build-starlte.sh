@@ -69,13 +69,13 @@ chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bi
 chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-size"
 chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar"
 chmod +x "$TMP_ROOT/kernel/samsung/exynos9810/scripts/samsung_bootimg.py"
-printf 'CONFIG_DTS_9810_STAR=y\\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig"
-printf 'Image.samsung: vmlinux scripts dtbs\\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/Makefile"
+printf 'CONFIG_DTS_9810_STAR=y\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig"
+printf 'Image.samsung: vmlinux scripts dtbs\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/Makefile"
 cat > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/boot/Makefile" <<'EOF'
 $(obj)/Image.samsung: $(obj)/Image $(obj)/dt.img $(samsung_bootimg) FORCE
 $(call if_changed,samsung_bundle)
 EOF
-printf 'dtb-$(CONFIG_DTS_9810_STAR) += exynos/exynos9810-starlte_eur_open_26.dtb\\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/boot/dts/Makefile"
+printf 'dtb-$(CONFIG_DTS_9810_STAR) += exynos/exynos9810-starlte_eur_open_26.dtb\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/boot/dts/Makefile"
 
 cat > "$TMP_ROOT/device/samsung/starlte/BoardConfig.mk" <<'EOF'
 TARGET_KERNEL_CONFIG := exynos9810-starlte_defconfig
