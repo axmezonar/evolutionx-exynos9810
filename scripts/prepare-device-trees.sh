@@ -3,7 +3,7 @@ set -euo pipefail
 
 usage() {
   echo "Usage: $0 [ANDROID_SOURCE_ROOT]" >&2
-  echo "Installs the Evolution X product definition for Galaxy S9 (starlte / SM-G960F)." >&2
+  echo "Adds the Evolution X Android 17 lunch choices for Galaxy S9 (starlte / SM-G960F)." >&2
 }
 
 ANDROID_TOP="${1:-${ANDROID_BUILD_TOP:-$PWD}}"
@@ -19,40 +19,32 @@ if [[ ! -f "$ANDROID_TOP/build/envsetup.sh" ]]; then
 fi
 
 DEVICE_DIR="$ANDROID_TOP/device/samsung/starlte"
-if [[ ! -f "$DEVICE_DIR/device.mk" || ! -f "$DEVICE_DIR/lineage_starlte.mk" ]]; then
-  echo "ERROR: starlte device tree is not synced under $DEVICE_DIR." >&2
+PRODUCT_MK="$DEVICE_DIR/lineage_starlte.mk"
+PRODUCTS_MK="$DEVICE_DIR/AndroidProducts.mk"
+if [[ ! -f "$DEVICE_DIR/device.mk" || ! -f "$PRODUCT_MK" || ! -f "$PRODUCTS_MK" ]]; then
+  echo "ERROR: starlte device tree is incomplete under $DEVICE_DIR." >&2
   exit 1
 fi
 
-cat > "$DEVICE_DIR/evolution_starlte.mk" <<'EOF'
-# Evolution X product definition for Samsung Galaxy S9 (Exynos)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_o.mk)
-$(call inherit-product, device/samsung/starlte/device.mk)
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+if ! grep -Fq 'PRODUCT_NAME := lineage_starlte' "$PRODUCT_MK"; then
+  echo "ERROR: expected the upstream S9 product PRODUCT_NAME := lineage_starlte." >&2
+  exit 1
+fi
+if ! grep -Fq 'vendor/lineage/config/common_full_phone.mk' "$PRODUCT_MK"; then
+  echo "ERROR: starlte product does not inherit the Evolution X vendor/lineage common phone config." >&2
+  exit 1
+fi
 
-PRODUCT_NAME := evolution_starlte
-PRODUCT_DEVICE := starlte
-PRODUCT_BRAND := samsung
-PRODUCT_MODEL := SM-G960F
-PRODUCT_MANUFACTURER := samsung
-PRODUCT_GMS_CLIENTID_BASE := android-samsung
-EOF
+# The upstream cnb product remains lineage_starlte; cp2a is the Android 17 release code.
+if ! grep -Fq 'lineage_starlte-cp2a-userdebug' "$PRODUCTS_MK"; then
+  cat >> "$PRODUCTS_MK" <<'EOF'
 
-# Retain the upstream Lineage lunch target while adding an Evolution X product.
-if ! grep -Fq '$(LOCAL_DIR)/evolution_starlte.mk' "$DEVICE_DIR/AndroidProducts.mk"; then
-  cat >> "$DEVICE_DIR/AndroidProducts.mk" <<'EOF'
-
-PRODUCT_MAKEFILES += \
-    $(LOCAL_DIR)/evolution_starlte.mk
-
+# Evolution X Android 17 (cnb / cp2a) build variants
 COMMON_LUNCH_CHOICES += \
-    evolution_starlte-user \
-    evolution_starlte-userdebug \
-    evolution_starlte-eng
+    lineage_starlte-cp2a-user \
+    lineage_starlte-cp2a-userdebug
 EOF
 fi
 
-echo "Prepared Evolution X product: evolution_starlte (SM-G960F)"
-echo "Next: cd \"$ANDROID_TOP\" && source build/envsetup.sh && lunch evolution_starlte-userdebug"
+echo "Prepared Evolution X product: lineage_starlte-cp2a-userdebug (SM-G960F)"
+echo "Build with: cd \"$ANDROID_TOP\" && source build/envsetup.sh && lunch lineage_starlte-cp2a-userdebug && m evolution"
