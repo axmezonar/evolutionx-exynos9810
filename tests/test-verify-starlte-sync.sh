@@ -60,6 +60,13 @@ if bash "$REPO_ROOT/scripts/verify-starlte-sync.sh" "$TMP_ROOT"; then
   echo "ERROR: preflight passed with a non-executable GCC toolchain." >&2
   exit 1
 fi
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-gcc"
+chmod -x "$TMP_ROOT/kernel/samsung/exynos9810/scripts/samsung_bootimg.py"
+if bash "$REPO_ROOT/scripts/verify-starlte-sync.sh" "$TMP_ROOT"; then
+  echo "ERROR: preflight passed with a non-executable Samsung boot packer." >&2
+  exit 1
+fi
+chmod +x "$TMP_ROOT/kernel/samsung/exynos9810/scripts/samsung_bootimg.py"
 rm "$TMP_ROOT/hardware/samsung_slsi-linaro/openmax/Android.bp"
 if bash "$REPO_ROOT/scripts/verify-starlte-sync.sh" "$TMP_ROOT"; then
   echo "ERROR: preflight passed despite a missing required dependency." >&2
