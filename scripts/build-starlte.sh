@@ -30,8 +30,8 @@ source build/envsetup.sh
 lunch lineage_starlte-cp2a-userdebug
 
 # This Android 17 build tree has no legacy kernel.mk target for this 4.9
-# device kernel. Build Samsung's Image.samsung container explicitly, then
-# stage it where Android's boot-image rules expect the kernel payload.
+# device kernel. Use the manifest's kernel Clang prebuilt plus the matching
+# AArch64 binutils, then stage Samsung's Image.samsung container explicitly.
 KERNEL_DIR="$ANDROID_TOP/kernel/samsung/exynos9810"
 DEVICE_BOARD_CONFIG="$ANDROID_TOP/device/samsung/starlte/BoardConfig.mk"
 COMMON_BOARD_CONFIG="$ANDROID_TOP/device/samsung/exynos9810-common/BoardConfigCommon.mk"
@@ -61,7 +61,9 @@ if [[ "$PRODUCT_OUT" != /* ]]; then
   PRODUCT_OUT="$ANDROID_TOP/$PRODUCT_OUT"
 fi
 
+CLANG_BIN="$ANDROID_TOP/prebuilts/clang/kernel/linux-x86/clang-r416183b/bin"
 GCC_BIN="$ANDROID_TOP/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin"
+CLANG="$CLANG_BIN/clang"
 KERNEL_OUT="${KERNEL_OUT:-$PRODUCT_OUT/obj/KERNEL_OBJ}"
 if [[ "$KERNEL_OUT" != /* ]]; then
   KERNEL_OUT="$ANDROID_TOP/$KERNEL_OUT"
@@ -69,10 +71,12 @@ fi
 mkdir -p "$KERNEL_OUT" "$PRODUCT_OUT"
 KERNEL_OUT="$(cd "$KERNEL_OUT" && pwd)"
 
-export PATH="$GCC_BIN:$PATH"
+export PATH="$CLANG_BIN:$GCC_BIN:$PATH"
 KERNEL_BUILD_ARGS=(
   "ARCH=arm64"
-  "CROSS_COMPILE=aarch64-linux-android-"
+  "CC=$CLANG"
+  "CLANG_TRIPLE=aarch64-linux-gnu-"
+  "CROSS_COMPILE=aarch64-linux-androidkernel-"
   "SAMSUNG_BOOT_PAGESIZE=$KERNEL_PAGE_SIZE"
 )
 
