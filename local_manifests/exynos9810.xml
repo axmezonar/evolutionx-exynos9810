@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="github" fetch="https://github.com/" />
+  <default remote="github" revision="lineage-24.0" />
+  <!-- Exynos 9810 device trees -->
+  <project name="ExyHyperBrick/android_device_samsung_exynos9810-common" path="device/samsung/exynos9810-common" revision="lineage-24.0" />
+  <project name="ExyHyperBrick/android_device_samsung_crownlte" path="device/samsung/crownlte" revision="lineage-24.0" />
+  <project name="ExyHyperBrick/android_device_samsung_starlte" path="device/samsung/starlte" revision="lineage-24.0" />
+  <project name="ExyHyperBrick/android_device_samsung_star2lte" path="device/samsung/star2lte" revision="lineage-24.0" />
+  <!-- Kernel -->
+  <project name="ExyHyperBrick/android_kernel_samsung_exynos9810" path="kernel/samsung/exynos9810" revision="lineage-24.0" />
+  <!-- Proprietary vendor files -->
+  <project name="ExyHyperBrick/proprietary_vendor_samsung_exynos9810-common" path="vendor/samsung/exynos9810-common" revision="lineage-24.0" />
+  <project name="ExyHyperBrick/proprietary_vendor_samsung_crownlte" path="vendor/samsung/crownlte" revision="lineage-24.0" />
+  <project name="ExyHyperBrick/proprietary_vendor_samsung_starlte" path="vendor/samsung/starlte" revision="lineage-24.0" />
+  <project name="ExyHyperBrick/proprietary_vendor_samsung_star2lte" path="vendor/samsung/star2lte" revision="lineage-24.0" />
+  <!-- Samsung platform dependencies -->
+  <project name="LineageOS/android_hardware_samsung" path="hardware/samsung" revision="lineage-24.0" />
+  <project name="LineageOS/android_device_samsung_slsi_sepolicy" path="device/samsung_slsi/sepolicy" revision="lineage-24.0" />
+  <project name="ExyHyperBrick/android_hardware_samsung_slsi-linaro_config" path="hardware/samsung_slsi-linaro/config" revision="lineage-21" />
+  <project name="ExyHyperBrick/android_hardware_samsung_slsi-linaro_exynos" path="hardware/samsung_slsi-linaro/exynos" revision="lineage-23.2" />
+  <project name="ExyHyperBrick/android_hardware_samsung_slsi-linaro_graphics" path="hardware/samsung_slsi-linaro/graphics" revision="lineage-21" />
+</manifest>
