@@ -80,4 +80,29 @@ if (( ${#missing_executables[@]} > 0 )); then
   exit 1
 fi
 
+COMMON_BOARD_CONFIG="$ANDROID_TOP/device/samsung/exynos9810-common/BoardConfigCommon.mk"
+required_boot_settings=(
+  'TARGET_KERNEL_SOURCE := kernel/samsung/exynos9810'
+  'BOARD_KERNEL_IMAGE_NAME := Image.samsung'
+  'BOARD_CUSTOM_MKBOOTIMG := $(TARGET_KERNEL_SOURCE)/scripts/samsung_bootimg.py'
+  'TARGET_KERNEL_ADDITIONAL_FLAGS += SAMSUNG_BOOT_PAGESIZE=$(BOARD_KERNEL_PAGESIZE)'
+)
+for setting in "${required_boot_settings[@]}"; do
+  if ! grep -Fqx "$setting" "$COMMON_BOARD_CONFIG"; then
+    echo "ERROR: S9 boot configuration is missing the required setting: $setting" >&2
+    exit 1
+  fi
+done
+if ! grep -Fq 'BOARD_MKBOOTIMG_ARGS := --header_version 0' "$COMMON_BOARD_CONFIG"; then
+  echo "ERROR: S9 boot configuration must use legacy Samsung boot header version 0." >&2
+  exit 1
+fi
+
+for forbidden in BOARD_CUSTOM_BOOTIMG BOARD_CUSTOM_BOOTIMG_MK BOARD_KERNEL_SEPARATED_DT TARGET_CUSTOM_DTBTOOL TARGET_PREBUILT_KERNEL; do
+  if grep -Eq "^[[:space:]]*${forbidden}[[:space:]]*([:+?]?=)" "$COMMON_BOARD_CONFIG"; then
+    echo "ERROR: obsolete or conflicting kernel/boot setting is present: $forbidden" >&2
+    exit 1
+  fi
+done
+
 echo "S9 source preflight passed: device tree, Samsung boot packer, kernel defconfig, GCC 4.9 kernel toolchain, vendor blobs, hardware and sepolicy dependencies are present."
