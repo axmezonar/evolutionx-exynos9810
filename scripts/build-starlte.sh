@@ -16,8 +16,8 @@ bash "$SCRIPT_DIR/verify-starlte-sync.sh" "$ANDROID_TOP"
 bash "$SCRIPT_DIR/prepare-device-trees.sh" "$ANDROID_TOP"
 cd "$ANDROID_TOP"
 source build/envsetup.sh
-lunch evolution_starlte-userdebug
-mka bacon -j"${BUILD_JOBS:-4}"
+lunch lineage_starlte-cp2a-userdebug
+m -j"${BUILD_JOBS:-4}" evolution
 
 echo
-echo "Build finished. Inspect out/target/product/starlte/ for the generated ROM package."
+echo "Build finished. Inspect out/target/product/starlte/ for the generated Evolution X package and build artifacts."
