@@ -19,9 +19,9 @@ The device/kernel/vendor trees are on the upstream ExyHyperBrick `lineage-24.0` 
 
 ## Build host
 
-A 64-bit Arch Linux host with at least 300–400 GB free SSD is recommended for a full source checkout and build. 32 GB RAM is workable; use a modest parallelism setting and sufficient swap. Start with `BUILD_JOBS=4` and `KERNEL_JOBS=4` on a 32 GB machine. The local manifest syncs the AArch64 GCC 4.9 cross-compiler and binutils used by the upstream legacy kernel build rule. The `cnb` manifest syncs OpenJDK 21 and OpenJDK 25 prebuilts. Soong selects the build JDK from the release configuration; do not force your system `JAVA_HOME` to an arbitrary version. Your system having Java 25 only should not, by itself, block this build.
+A 64-bit Arch Linux host with at least 300–400 GB free SSD is recommended for a full source checkout and build. 32 GB RAM is workable; use a modest parallelism setting and sufficient swap. Start with `BUILD_JOBS=4` and `KERNEL_JOBS=4` on a 32 GB machine. The `cnb` manifest supplies the kernel Clang `clang-r416183b` prebuilt; the local manifest adds the AArch64 GCC 4.9 binutils aliases that this legacy kernel expects alongside Clang. The `cnb` manifest also syncs OpenJDK 21 and OpenJDK 25 prebuilts. Soong selects the build JDK from the release configuration; do not force your system `JAVA_HOME` to an arbitrary version. Your system having Java 25 only should not, by itself, block this build.
 
-Install the Android build prerequisites from the current Android/Lineage build documentation and make sure `repo`, Git, Python, Git LFS, and standard build utilities are available. **Important for this legacy kernel:** the pinned GCC 4.9 wrapper uses an absolute `/usr/bin/python` shebang. On Arch, install the official `python` package (`sudo pacman -S python`) and verify `test -x /usr/bin/python` before starting the kernel build.
+Install the Android build prerequisites from the current Android/Lineage build documentation and make sure `repo`, Git, Python 3, Git LFS, and standard build utilities are available. The Samsung boot packer uses `#!/usr/bin/env python3` and only Python's standard library.
 
 ## Sync the Android 17 source
 
@@ -48,7 +48,7 @@ Run this from the Android source root. The build script checks the complete S9 s
 BUILD_JOBS=4 KERNEL_JOBS=4 bash /path/to/evolutionx-exynos9810/scripts/build-starlte.sh "$PWD"
 ```
 
-The kernel phase reads the actual S9 defconfig, Samsung image name and page size from the synced device configuration. It uses the upstream AArch64 GCC 4.9 cross-toolchain, then runs the kernel's `Image.samsung` target. That target creates Samsung's Exynos 9810 kernel/DTBH container; it is **not a standalone flashable image**. The script stages it as `$PRODUCT_OUT/kernel`, which is the kernel payload consumed by Android's boot-image packaging rules, before running `m evolution`.
+The kernel phase reads the actual S9 defconfig, Samsung image name and page size from the synced device configuration. It uses the manifest's `clang-r416183b` compiler with the GCC 4.9 AArch64 binutils (`CLANG_TRIPLE=aarch64-linux-gnu-`, `CROSS_COMPILE=aarch64-linux-androidkernel-`), then runs the kernel's `Image.samsung` target. That target creates Samsung's Exynos 9810 kernel/DTBH container; it is **not a standalone flashable image**. The script stages it as `$PRODUCT_OUT/kernel`, which is the kernel payload consumed by Android's boot-image packaging rules, before running `m evolution`.
 
 `BUILD_JOBS` controls Android's ROM build parallelism and `KERNEL_JOBS` controls the separate kernel build. Both default to 4; reduce them if the workstation runs out of RAM. You can override the kernel build directory with `KERNEL_OUT`.
 
@@ -76,7 +76,7 @@ Keep a known-good stock firmware and a recovery path available. Do not flash an 
 
 ## Current completion status
 
-The S9 source integration and product-definition scaffolding are present. Static CI checks cover shell syntax, S9 lunch-choice generation, idempotence, required source paths and executable toolchains, the kernel build/staging hand-off, and XML well-formedness. **No Android ROM build, emulator run, boot test or physical hardware test has been performed in this environment.** The ROM is therefore not finished or safe to distribute yet; compiler output and device logs will drive the next porting fixes.
+The S9 source integration and product-definition scaffolding are present. Static CI checks cover shell syntax, S9 lunch-choice generation, idempotence, required source paths and the Clang/binutils toolchain, the kernel build/staging hand-off, and XML well-formedness. **No Android ROM build, emulator run, boot test or physical hardware test has been performed in this environment.** The ROM is therefore not finished or safe to distribute yet; compiler output and device logs will drive the next porting fixes.
 
 ## Scope
 
