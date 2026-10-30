@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <remote name="github" fetch="https://github.com/" />
-  <default remote="github" revision="lineage-24.0" />
-
   <!-- Galaxy S9 (starlte / SM-G960F) device configuration -->
   <project name="ExyHyperBrick/android_device_samsung_exynos9810-common" path="device/samsung/exynos9810-common" revision="lineage-24.0" />
   <project name="ExyHyperBrick/android_device_samsung_starlte" path="device/samsung/starlte" revision="lineage-24.0" />
