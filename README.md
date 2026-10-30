@@ -19,7 +19,7 @@ The device/kernel/vendor trees are on the upstream ExyHyperBrick `lineage-24.0` 
 
 ## Build host
 
-A 64-bit Arch Linux host with at least 300–400 GB free SSD is recommended for a full source checkout and build. 32 GB RAM is workable; use a modest parallelism setting and sufficient swap. Start with `BUILD_JOBS=4` and `KERNEL_JOBS=4` on a 32 GB machine. The local manifest also syncs the AArch64 GCC 4.9 binutils used by this legacy kernel; the Evolution/Lineage manifest supplies the `clang-r416183b` kernel compiler prebuilt. The `cnb` manifest syncs OpenJDK 21 and OpenJDK 25 prebuilts. Soong selects the build JDK from the release configuration; do not force your system `JAVA_HOME` to an arbitrary version. Your system having Java 25 only should not, by itself, block this build.
+A 64-bit Arch Linux host with at least 300–400 GB free SSD is recommended for a full source checkout and build. 32 GB RAM is workable; use a modest parallelism setting and sufficient swap. Start with `BUILD_JOBS=4` and `KERNEL_JOBS=4` on a 32 GB machine. The local manifest syncs the AArch64 GCC 4.9 cross-compiler and binutils used by the upstream legacy kernel build rule. The `cnb` manifest syncs OpenJDK 21 and OpenJDK 25 prebuilts. Soong selects the build JDK from the release configuration; do not force your system `JAVA_HOME` to an arbitrary version. Your system having Java 25 only should not, by itself, block this build.
 
 Install the Android build prerequisites from the current Android/Lineage build documentation and make sure `repo`, Git, Python 3, Git LFS, and standard build utilities are available.
 
@@ -48,7 +48,7 @@ Run this from the Android source root. The build script checks the complete S9 s
 BUILD_JOBS=4 KERNEL_JOBS=4 bash /path/to/evolutionx-exynos9810/scripts/build-starlte.sh "$PWD"
 ```
 
-The kernel phase reads the actual S9 defconfig, Samsung image name and page size from the synced device configuration. It uses the manifest's `clang-r416183b` prebuilt with the kernel's AArch64 GCC 4.9 binutils, then runs the kernel's `Image.samsung` target. That target creates Samsung's Exynos 9810 kernel/DTBH container; it is **not a standalone flashable image**. The script stages it as `$PRODUCT_OUT/kernel`, which is the kernel payload consumed by Android's boot-image packaging rules, before running `m evolution`.
+The kernel phase reads the actual S9 defconfig, Samsung image name and page size from the synced device configuration. It uses the upstream AArch64 GCC 4.9 cross-toolchain, then runs the kernel's `Image.samsung` target. That target creates Samsung's Exynos 9810 kernel/DTBH container; it is **not a standalone flashable image**. The script stages it as `$PRODUCT_OUT/kernel`, which is the kernel payload consumed by Android's boot-image packaging rules, before running `m evolution`.
 
 `BUILD_JOBS` controls Android's ROM build parallelism and `KERNEL_JOBS` controls the separate kernel build. Both default to 4; reduce them if the workstation runs out of RAM. You can override the kernel build directory with `KERNEL_OUT`.
 
