@@ -6,6 +6,7 @@ Initial device bring-up for the **Samsung Galaxy S9 Exynos variant**:
 - Model: `SM-G960F`
 - SoC: Samsung Exynos 9810
 - Target ROM branch: Evolution X `cnb` (Android 17)
+- Current branch version metadata: Android `17.0`, Evolution version base `12.3`, unofficial build by default
 - Platform/device-tree base: LineageOS `lineage-24.0`
 
 This project is not for the Snapdragon Galaxy S9 (`starqlte`) and must not be flashed to that variant.
@@ -18,7 +19,7 @@ The device/kernel/vendor trees are on the upstream ExyHyperBrick `lineage-24.0` 
 
 ## Build host
 
-A 64-bit Arch Linux host with at least 300–400 GB free SSD is recommended for a full source checkout and build. 32 GB RAM is workable; use a modest parallelism setting and sufficient swap. Start with `BUILD_JOBS=4` on a 32 GB machine. The build tree's bundled/prebuilt JDK should be preferred over assuming that the host's newest Java version is supported.
+A 64-bit Arch Linux host with at least 300–400 GB free SSD is recommended for a full source checkout and build. 32 GB RAM is workable; use a modest parallelism setting and sufficient swap. Start with `BUILD_JOBS=4` on a 32 GB machine. The `cnb` manifest syncs OpenJDK 21 and OpenJDK 25 prebuilts. Soong selects the build JDK from the release configuration; do not force your system `JAVA_HOME` to an arbitrary version. Your system having Java 25 only should not, by itself, block this build.
 
 Install the Android build prerequisites from the current Android/Lineage build documentation and make sure `repo`, Git, Python 3, Git LFS, and standard build utilities are available.
 
@@ -62,7 +63,7 @@ lunch lineage_starlte-cp2a-userdebug
 m -j4 evolution
 ```
 
-Expected lunch target: `lineage_starlte-cp2a-userdebug`. Evolution X's current `cnb` manifest uses the `lineage_<codename>-cp2a-<variant>` form and builds with `m evolution`; `EVO_BUILD_TYPE` defaults to `Unofficial` in the current vendor config.
+Expected lunch target: `lineage_starlte-cp2a-userdebug`. Evolution X's current `cnb` manifest uses the `lineage_<codename>-cp2a-<variant>` form and builds with `m evolution`; the current vendor config sets Android version `17.0`, Evolution version base `12.3`, and defaults `EVO_BUILD_TYPE` to `Unofficial`.
 
 ## Validation sequence
 
