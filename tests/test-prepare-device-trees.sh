@@ -34,5 +34,7 @@ grep -Fq 'lineage_starlte-cp2a-userdebug' "$TMP_ROOT/device/samsung/starlte/Andr
 test "$(grep -Fc 'lineage_starlte-cp2a-userdebug' "$TMP_ROOT/device/samsung/starlte/AndroidProducts.mk")" -eq 1
 test ! -e "$TMP_ROOT/device/samsung/starlte/evolution_starlte.mk"
 grep -Fq 'lineage_starlte-cp2a-userdebug' "$REPO_ROOT/scripts/build-starlte.sh"
-grep -Fq 'm -j"${BUILD_JOBS:-4}" evolution' "$REPO_ROOT/scripts/build-starlte.sh"
+grep -Fq 'm -j"$BUILD_JOBS" evolution' "$REPO_ROOT/scripts/build-starlte.sh"
+grep -Fq 'Image.samsung' "$REPO_ROOT/scripts/build-starlte.sh"
+grep -Fq 'CROSS_COMPILE=aarch64-linux-androidkernel-' "$REPO_ROOT/scripts/build-starlte.sh"
 echo "S9 cnb/cp2a product preparation tests passed."
