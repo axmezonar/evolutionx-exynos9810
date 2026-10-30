@@ -156,4 +156,4 @@ for forbidden in BOARD_CUSTOM_BOOTIMG BOARD_CUSTOM_BOOTIMG_MK BOARD_KERNEL_SEPAR
   fi
 done
 
-echo "S9 source preflight passed: device tree, Samsung boot packer, kernel defconfig, GCC 4.9 kernel toolchain, vendor blobs, hardware and sepolicy dependencies are present."
+echo "S9 source preflight passed: device tree, Samsung boot packer, S9 DTB selection, Clang/binutils toolchain, vendor blobs, hardware and sepolicy dependencies are present."
