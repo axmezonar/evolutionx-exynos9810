@@ -62,7 +62,7 @@ if [[ "$PRODUCT_OUT" != /* ]]; then
 fi
 
 CLANG_BIN="$ANDROID_TOP/prebuilts/clang/kernel/linux-x86/clang-r416183b/bin"
-GCC_BIN="$ANDROID_TOP/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin"
+BINUTILS_BIN="$ANDROID_TOP/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin"
 CLANG="$CLANG_BIN/clang"
 KERNEL_OUT="${KERNEL_OUT:-$PRODUCT_OUT/obj/KERNEL_OBJ}"
 if [[ "$KERNEL_OUT" != /* ]]; then
@@ -71,7 +71,7 @@ fi
 mkdir -p "$KERNEL_OUT" "$PRODUCT_OUT"
 KERNEL_OUT="$(cd "$KERNEL_OUT" && pwd)"
 
-export PATH="$CLANG_BIN:$GCC_BIN:$PATH"
+export PATH="$CLANG_BIN:$BINUTILS_BIN:$PATH"
 KERNEL_BUILD_ARGS=(
   "ARCH=arm64"
   "CC=$CLANG"
