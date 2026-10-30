@@ -1,45 +1,80 @@
-# Evolution X — Exynos 9810
+# Evolution X — Galaxy S9 (Exynos 9810)
 
-Unofficial bring-up workspace for Samsung Exynos 9810 devices:
+Initial device bring-up for the **Samsung Galaxy S9 Exynos variant**:
 
-| Codename | Device | Model |
-|---|---|---|
-| `starlte` | Galaxy S9 | SM-G960F |
-| `star2lte` | Galaxy S9+ | SM-G965F |
-| `crownlte` | Galaxy Note 9 | SM-N960F |
+- Device codename: `starlte`
+- Model: `SM-G960F`
+- SoC: Samsung Exynos 9810
+- Target ROM branch: Evolution X `cnb` (Android 17)
+- Platform/device-tree base: LineageOS `lineage-24.0`
 
-## ROM base
+This project is not for the Snapdragon Galaxy S9 (`starqlte`) and must not be flashed to that variant.
 
-- Upstream: [Evolution-X/manifest](https://github.com/Evolution-X/manifest)
-- Target branch: `cnb` (Android 17)
-- The upstream manifest currently pins its platform projects to `lineage-24.0`.
+## Source selection
+
+The local manifest syncs only the S9's device tree, Exynos 9810 common tree, matching kernel, matching proprietary vendor blobs, and Samsung platform dependencies. The S9+ and Note 9 projects have been left out of this S9-first sync to avoid downloading unneeded trees and blobs.
+
+The device/kernel/vendor trees are on the upstream ExyHyperBrick `lineage-24.0` branches. Samsung Linaro dependencies are pinned to the latest Exynos 9810 branches found during inspection: config and graphics `lineage-21`, Exynos `lineage-23.2`. These are not Android 17 certification claims; the first compile will validate whether more porting is required.
 
 ## Build host
 
-Your previously described Arch Linux workstation (i7-10610U, 32 GB RAM, at least 1 TB free SSD) is a workable starting point. Keep generous swap available. Use the JDK version required by the exact Android build branch; do not assume the newest system Java is compatible.
+A 64-bit Arch Linux host with at least 300–400 GB free SSD is recommended for a full source checkout and build. 32 GB RAM is workable; use a modest parallelism setting and sufficient swap. Start with `BUILD_JOBS=4` on a 32 GB machine. The build tree's bundled/prebuilt JDK should be preferred over assuming that the host's newest Java version is supported.
 
-## Sync
+Install the Android build prerequisites from the current Android/Lineage build documentation and make sure `repo`, Git, Python 3, Git LFS (if the upstream manifest requires it), and standard build utilities are available.
+
+## Sync the Android 17 source
+
+From the directory where you want the Android source checkout:
 
 ```bash
 repo init -u https://github.com/Evolution-X/manifest -b cnb
 mkdir -p .repo/local_manifests
 cp /path/to/evolutionx-exynos9810/local_manifests/exynos9810.xml .repo/local_manifests/exynos9810.xml
-repo sync -c --force-sync --no-clone-bundle --no-tags -j4
+repo sync -c --no-clone-bundle --no-tags -j4
 ```
 
-Apply the product definitions after syncing:
+Use the S9 bring-up branch of this repository for the scripts while the changes are under review:
 
 ```bash
-bash /path/to/evolutionx-exynos9810/scripts/prepare-device-trees.sh
-source build/envsetup.sh
-lunch evolution_starlte-userdebug
-mka bacon
+git clone -b s9-bringup https://github.com/axmezonar/evolutionx-exynos9810.git
 ```
 
-Use `evolution_star2lte-userdebug` for S9+ or `evolution_crownlte-userdebug` for Note 9.
+## Prepare and build the S9
 
-## Current status and caveats
+Run these commands from the Android source root. The preparation script preserves the original Lineage lunch target and adds an Evolution X product definition:
 
-This is a bring-up scaffold, not a verified ROM release. Device, kernel, and proprietary vendor trees selected here are on LineageOS 24.0 branches. Some Samsung Linaro hardware dependencies are older (config/graphics 21; Exynos 23.2) and are explicitly pinned in the local manifest. They must be validated against the Android 17 build before claiming compatibility.
+```bash
+/path/to/evolutionx-exynos9810/scripts/prepare-device-trees.sh "$PWD"
+/path/to/evolutionx-exynos9810/scripts/build-starlte.sh "$PWD"
+```
 
-No successful build, boot, radio, camera, fingerprint, NFC, audio, encryption, or OTA test is claimed. Expect API/Soong, sepolicy, blob, and kernel integration fixes. Do not flash anything until the image has been built and tested on the exact model. Exynos and Snapdragon variants are not interchangeable.
+Or build manually:
+
+```bash
+source build/envsetup.sh
+lunch evolution_starlte-userdebug
+mka bacon -j4
+```
+
+Expected lunch target: `evolution_starlte-userdebug`.
+
+## Validation sequence
+
+A successful compile is only the first milestone. Before publishing or flashing a build, validate on an actual **SM-G960F**:
+
+1. Boot and recovery access; verify boot/vendor_boot/dtbo partition assumptions and recovery compatibility.
+2. Display, touch, brightness, auto-rotation, proximity and ambient-light sensors.
+3. Wi-Fi, Bluetooth, NFC, GPS, SIM detection, LTE data, VoLTE/IMS and calls.
+4. Front/rear cameras, video recording, flash and camera switching.
+5. Fingerprint, audio/microphone, speakers, USB/MTP and charging.
+6. Encryption/decryption, reboot, SELinux enforcing state, OTA/update flow and thermal behavior.
+
+Keep a known-good stock firmware and a recovery path available. Do not flash an image built for a different model or Snapdragon variant.
+
+## Current completion status
+
+The S9 source integration and product-definition scaffolding are present. Static CI checks cover shell syntax, the S9 product generation and XML well-formedness. **No Android ROM build, emulator run, boot test or physical hardware test has been performed in this environment.** The ROM is therefore not finished or safe to distribute yet; compiler output and device logs will drive the next porting fixes.
+
+## Scope
+
+S9 is the first target. S9+ (`star2lte`) and Note 9 (`crownlte`) bring-up will follow only after the S9 has a reproducible successful build and validated boot.
