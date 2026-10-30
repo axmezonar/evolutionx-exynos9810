@@ -1,0 +1,61 @@
+name: S9 bring-up validation
+
+concurrency:
+  group: s9-validation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate shell syntax and S9 product generation
+        run: bash tests/test-prepare-device-trees.sh
+      - name: Validate S9 sync preflight
+        run: bash tests/test-verify-starlte-sync.sh
+      - name: Validate kernel build and staging orchestration
+        run: bash tests/test-build-starlte.sh
+      - name: Validate local repo manifest XML
+        run: python3 -c "import xml.etree.ElementTree as ET; ET.parse('local_manifests/exynos9810.xml'); print('Manifest XML is valid.')"
+
+  kernel-build:
+    name: Compile the real starlte kernel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install legacy kernel host dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bc bison flex libelf-dev libssl-dev
+      - name: Fetch pinned S9 kernel, kernel Clang and binutils
+        run: |
+          git clone --depth 1 --branch lineage-24.0 \
+            https://github.com/ExyHyperBrick/android_kernel_samsung_exynos9810.git kernel
+          git clone --depth 1 --branch lineage-20.0 \
+            https://github.com/LineageOS/android_prebuilts_clang_kernel_linux-x86_clang-r416183b.git clang
+          git clone --depth 1 --branch lineage-19.1 \
+            https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git toolchain
+      - name: Build the S9 defconfig and Samsung kernel container with Clang
+        run: |
+          CLANG_BIN="$GITHUB_WORKSPACE/clang/bin"
+          TOOLCHAIN_BIN="$GITHUB_WORKSPACE/toolchain/bin"
+          export PATH="$CLANG_BIN:$TOOLCHAIN_BIN:$PATH"
+          KERNEL_OUT="$GITHUB_WORKSPACE/out"
+          make -C "$GITHUB_WORKSPACE/kernel" O="$KERNEL_OUT" \
+            ARCH=arm64 CC="$CLANG_BIN/clang" \
+            CLANG_TRIPLE=aarch64-linux-gnu- \
+            CROSS_COMPILE=aarch64-linux-androidkernel- \
+            exynos9810-starlte_defconfig
+          make -C "$GITHUB_WORKSPACE/kernel" O="$KERNEL_OUT" \
+            ARCH=arm64 CC="$CLANG_BIN/clang" \
+            CLANG_TRIPLE=aarch64-linux-gnu- \
+            CROSS_COMPILE=aarch64-linux-androidkernel- \
+            SAMSUNG_BOOT_PAGESIZE=2048 -j2 Image.samsung
+          test -s "$KERNEL_OUT/arch/arm64/boot/Image.samsung"
+          ls -lh "$KERNEL_OUT/arch/arm64/boot/Image.samsung"
