@@ -58,8 +58,15 @@ cat > "$TMP_ROOT/device/samsung/starlte/BoardConfig.mk" <<'EOF'
 TARGET_KERNEL_CONFIG := exynos9810-starlte_defconfig
 EOF
 cat > "$TMP_ROOT/device/samsung/exynos9810-common/BoardConfigCommon.mk" <<'EOF'
+TARGET_KERNEL_SOURCE := kernel/samsung/exynos9810
 BOARD_KERNEL_IMAGE_NAME := Image.samsung
 BOARD_KERNEL_PAGESIZE := 2048
+BOARD_CUSTOM_MKBOOTIMG := $(TARGET_KERNEL_SOURCE)/scripts/samsung_bootimg.py
+TARGET_KERNEL_ADDITIONAL_FLAGS += SAMSUNG_BOOT_PAGESIZE=$(BOARD_KERNEL_PAGESIZE)
+BOARD_MKBOOTIMG_ARGS := --header_version 0 \
+    --kernel_offset $(BOARD_KERNEL_OFFSET) \
+    --ramdisk_offset $(BOARD_KERNEL_RAMDISK_OFFSET) \
+    --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 EOF
 cat > "$TMP_ROOT/device/samsung/starlte/lineage_starlte.mk" <<'EOF'
 PRODUCT_NAME := lineage_starlte
