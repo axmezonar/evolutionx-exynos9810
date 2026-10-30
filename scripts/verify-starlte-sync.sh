@@ -74,7 +74,7 @@ for path in "${required_executables[@]}"; do
 done
 
 if (( ${#missing_executables[@]} > 0 )); then
-  echo "ERROR: S9 kernel toolchain is incomplete or not executable:" >&2
+  echo "ERROR: S9 kernel toolchain or Samsung boot packer is incomplete or not executable:" >&2
   printf "  - %s\n" "${missing_executables[@]}" >&2
   echo "Run repo sync again and check the kernel toolchain projects in local_manifests/exynos9810.xml." >&2
   exit 1
