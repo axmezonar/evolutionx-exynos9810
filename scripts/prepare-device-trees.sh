@@ -46,5 +46,6 @@ COMMON_LUNCH_CHOICES += \
 EOF
 fi
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 echo "Prepared Evolution X product: lineage_starlte-cp2a-userdebug (SM-G960F)"
-echo "Build with: cd \"$ANDROID_TOP\" && source build/envsetup.sh && lunch lineage_starlte-cp2a-userdebug && m evolution"
+echo "Build with: BUILD_JOBS=4 KERNEL_JOBS=4 bash \"$SCRIPT_DIR/build-starlte.sh\" \"$ANDROID_TOP\""
