@@ -9,6 +9,9 @@
   <project name="ExyHyperBrick/proprietary_vendor_samsung_exynos9810-common" path="vendor/samsung/exynos9810-common" revision="lineage-24.0" />
   <project name="ExyHyperBrick/proprietary_vendor_samsung_starlte" path="vendor/samsung/starlte" revision="lineage-24.0" />
 
+  <!-- Legacy Exynos 9810 kernel binutils used with the manifest Clang prebuilt -->
+  <project name="LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9" path="prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9" revision="lineage-19.1" />
+
   <!-- Samsung platform integration required by the Exynos 9810 trees -->
   <project name="LineageOS/android_hardware_samsung" path="hardware/samsung" revision="lineage-24.0" />
   <project name="LineageOS/android_device_samsung_slsi_sepolicy" path="device/samsung_slsi/sepolicy" revision="lineage-24.0" />
