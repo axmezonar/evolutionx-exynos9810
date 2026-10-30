@@ -115,7 +115,7 @@ if ! grep -Fqx 'Image.samsung: vmlinux scripts dtbs' "$KERNEL_ARCH_MAKE"; then
   echo "ERROR: kernel top-level ARM64 Makefile does not expose the required Image.samsung target with DTB dependencies." >&2
   exit 1
 fi
-if ! grep -Fqx '$(obj)/Image.samsung: $(obj)/Image $(obj)/dt.img $(samsung_bootimg) FORCE' "$KERNEL_BOOT_MAKE" || ! grep -Eq '^[[:space:]]*\$\(call if_changed,samsung_bundle\); then
+if ! grep -Fqx '$(obj)/Image.samsung: $(obj)/Image $(obj)/dt.img $(samsung_bootimg) FORCE' "$KERNEL_BOOT_MAKE" || ! grep -Eq '^[[:space:]]*\$\(call if_changed,samsung_bundle\)$' "$KERNEL_BOOT_MAKE"; then
   echo "ERROR: Samsung Image.samsung packaging rule is missing from arch/arm64/boot/Makefile." >&2
   exit 1
 fi
