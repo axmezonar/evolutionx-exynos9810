@@ -20,7 +20,7 @@ The device/kernel/vendor trees are on the upstream ExyHyperBrick `lineage-24.0` 
 
 A 64-bit Arch Linux host with at least 300–400 GB free SSD is recommended for a full source checkout and build. 32 GB RAM is workable; use a modest parallelism setting and sufficient swap. Start with `BUILD_JOBS=4` on a 32 GB machine. The build tree's bundled/prebuilt JDK should be preferred over assuming that the host's newest Java version is supported.
 
-Install the Android build prerequisites from the current Android/Lineage build documentation and make sure `repo`, Git, Python 3, Git LFS (if the upstream manifest requires it), and standard build utilities are available.
+Install the Android build prerequisites from the current Android/Lineage build documentation and make sure `repo`, Git, Python 3, Git LFS, and standard build utilities are available.
 
 ## Sync the Android 17 source
 
@@ -41,14 +41,20 @@ git clone -b s9-bringup https://github.com/axmezonar/evolutionx-exynos9810.git
 
 ## Prepare and build the S9
 
-Run these commands from the Android source root. The preparation script preserves the original Lineage lunch target and adds an Evolution X product definition:
+Run this from the Android source root. The build script first checks that the full S9 source set is synced, adds the Evolution X product while preserving the Lineage lunch target, then runs `envsetup`, lunch and the build:
 
 ```bash
-bash /path/to/evolutionx-exynos9810/scripts/prepare-device-trees.sh "$PWD"
-bash /path/to/evolutionx-exynos9810/scripts/build-starlte.sh "$PWD"
+BUILD_JOBS=4 bash /path/to/evolutionx-exynos9810/scripts/build-starlte.sh "$PWD"
 ```
 
-Or build manually:
+To inspect the generated product setup without starting a build:
+
+```bash
+bash /path/to/evolutionx-exynos9810/scripts/verify-starlte-sync.sh "$PWD"
+bash /path/to/evolutionx-exynos9810/scripts/prepare-device-trees.sh "$PWD"
+```
+
+Or build manually after those two preparation commands:
 
 ```bash
 source build/envsetup.sh
