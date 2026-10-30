@@ -12,6 +12,7 @@ if [[ ! -f "$ANDROID_TOP/build/envsetup.sh" ]]; then
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+bash "$SCRIPT_DIR/verify-starlte-sync.sh" "$ANDROID_TOP"
 bash "$SCRIPT_DIR/prepare-device-trees.sh" "$ANDROID_TOP"
 cd "$ANDROID_TOP"
 source build/envsetup.sh
