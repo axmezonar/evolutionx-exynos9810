@@ -14,7 +14,7 @@ This project is not for the Snapdragon Galaxy S9 (`starqlte`) and must not be fl
 
 The local manifest syncs only the S9's device tree, Exynos 9810 common tree, matching kernel, matching proprietary vendor blobs, and Samsung platform dependencies. The S9+ and Note 9 projects have been left out of this S9-first sync to avoid downloading unneeded trees and blobs.
 
-The device/kernel/vendor trees are on the upstream ExyHyperBrick `lineage-24.0` branches. Samsung Linaro dependencies are pinned to the latest Exynos 9810 branches found during inspection: config and graphics `lineage-21`, Exynos `lineage-23.2`. These are not Android 17 certification claims; the first compile will validate whether more porting is required.
+The device/kernel/vendor trees are on the upstream ExyHyperBrick `lineage-24.0` branches. The Samsung Linaro stack includes ExyHyperBrick config and graphics (`lineage-21`) plus Exynos (`lineage-23.2`), and LineageOS interfaces and OpenMAX (`lineage-24.0`). The older config/graphics/Exynos branches retain Exynos 9810-specific support not present in the generic current graphics tree. These pins are compatibility choices, not Android 17 certification claims; the first compile will validate whether more porting is required.
 
 ## Build host
 
@@ -27,7 +27,7 @@ Install the Android build prerequisites from the current Android/Lineage build d
 From the directory where you want the Android source checkout:
 
 ```bash
-repo init -u https://github.com/Evolution-X/manifest -b cnb
+repo init -u https://github.com/Evolution-X/manifest -b cnb --git-lfs
 mkdir -p .repo/local_manifests
 cp /path/to/evolutionx-exynos9810/local_manifests/exynos9810.xml .repo/local_manifests/exynos9810.xml
 repo sync -c --no-clone-bundle --no-tags -j4
