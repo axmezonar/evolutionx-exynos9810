@@ -27,6 +27,7 @@ bash "$REPO_ROOT/scripts/prepare-device-trees.sh" "$TMP_ROOT"
 
 grep -Fq '$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)' "$TMP_ROOT/device/samsung/starlte/evolution_starlte.mk"
 grep -Fq 'PRODUCT_MODEL := SM-G960F' "$TMP_ROOT/device/samsung/starlte/evolution_starlte.mk"
+grep -Fq '$(call inherit-product, vendor/lineage/config/common_full_phone.mk)' "$TMP_ROOT/device/samsung/starlte/evolution_starlte.mk"
 grep -Fq '$(LOCAL_DIR)/evolution_starlte.mk' "$TMP_ROOT/device/samsung/starlte/AndroidProducts.mk"
 test "$(grep -Fc '$(LOCAL_DIR)/evolution_starlte.mk' "$TMP_ROOT/device/samsung/starlte/AndroidProducts.mk")" -eq 1
 grep -Fq 'lineage_starlte.mk' "$TMP_ROOT/device/samsung/starlte/AndroidProducts.mk"
