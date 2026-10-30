@@ -15,8 +15,8 @@ required_paths=(
   "device/samsung/exynos9810-common/BoardConfigCommon.mk"
   "device/samsung/exynos9810-common/common.mk"
   "kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig"
-  "prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang"
-  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ld"
+  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-gcc"
+  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld"
   "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-objcopy"
   "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ar"
   "vendor/samsung/starlte/BoardConfigVendor.mk"
@@ -56,8 +56,8 @@ if (( ${#missing[@]} > 0 )); then
 fi
 
 required_executables=(
-  "prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang"
-  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ld"
+  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-gcc"
+  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld"
   "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-objcopy"
   "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ar"
 )
@@ -76,4 +76,4 @@ if (( ${#missing_executables[@]} > 0 )); then
   exit 1
 fi
 
-echo "S9 source preflight passed: device tree, Samsung boot packer, kernel defconfig, Clang/GCC toolchains, vendor blobs, hardware and sepolicy dependencies are present."
+echo "S9 source preflight passed: device tree, Samsung boot packer, kernel defconfig, GCC 4.9 kernel toolchain, vendor blobs, hardware and sepolicy dependencies are present."
