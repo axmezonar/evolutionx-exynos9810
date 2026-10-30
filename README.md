@@ -44,8 +44,8 @@ git clone -b s9-bringup https://github.com/axmezonar/evolutionx-exynos9810.git
 Run these commands from the Android source root. The preparation script preserves the original Lineage lunch target and adds an Evolution X product definition:
 
 ```bash
-/path/to/evolutionx-exynos9810/scripts/prepare-device-trees.sh "$PWD"
-/path/to/evolutionx-exynos9810/scripts/build-starlte.sh "$PWD"
+bash /path/to/evolutionx-exynos9810/scripts/prepare-device-trees.sh "$PWD"
+bash /path/to/evolutionx-exynos9810/scripts/build-starlte.sh "$PWD"
 ```
 
 Or build manually:
