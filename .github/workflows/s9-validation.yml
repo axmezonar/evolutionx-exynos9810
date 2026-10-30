@@ -1,8 +1,12 @@
 name: S9 bring-up validation
 
+concurrency:
+  group: s9-validation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
-    branches: [main, s9-bringup]
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
