@@ -39,16 +39,15 @@ hardware/lineage/generic-ims/ims.mk
 device/samsung_slsi/sepolicy/sepolicy.mk
 device/lineage/sepolicy/exynos/sepolicy.mk
 device/lineage/sepolicy/libion/sepolicy.mk
-prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ld
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-objcopy
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ar
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-objcopy
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar
 EOF
 
-chmod +x "$TMP_ROOT/prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ld"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-objcopy"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ar"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-gcc"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-objcopy"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar"
 
 cat > "$TMP_ROOT/device/samsung/starlte/BoardConfig.mk" <<'EOF'
 TARGET_KERNEL_CONFIG := exynos9810-starlte_defconfig
@@ -142,10 +141,9 @@ test -s "$PRODUCT_KERNEL"
 grep -Fq 'mock Samsung kernel container' "$PRODUCT_KERNEL"
 grep -Fq 'exynos9810-starlte_defconfig' "$MOCK_MAKE_LOG"
 grep -Fq 'Image.samsung' "$MOCK_MAKE_LOG"
-grep -Fq 'CROSS_COMPILE=aarch64-linux-androidkernel-' "$MOCK_MAKE_LOG"
-grep -Fq 'CLANG_TRIPLE=aarch64-linux-gnu-' "$MOCK_MAKE_LOG"
+grep -Fq 'CROSS_COMPILE=aarch64-linux-android-' "$MOCK_MAKE_LOG"
+grep -Fq 'ARCH=arm64' "$MOCK_MAKE_LOG"
 grep -Fq 'SAMSUNG_BOOT_PAGESIZE=2048' "$MOCK_MAKE_LOG"
-grep -Fq 'CC=' "$MOCK_MAKE_LOG"
 grep -Fq -- '-j2' "$MOCK_MAKE_LOG"
 grep -Fq -- '-j2 evolution' "$MOCK_ROM_TARGET"
 
