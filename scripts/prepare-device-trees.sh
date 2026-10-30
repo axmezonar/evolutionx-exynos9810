@@ -17,8 +17,8 @@ for device in crownlte starlte star2lte; do
 # Evolution X product definition for ${device}
 \$(call inherit-product, \$(SRC_TARGET_DIR)/product/core_64_bit.mk)
 \$(call inherit-product, \$(SRC_TARGET_DIR)/product/full_base_telephony.mk)
-$(call inherit-product, device/samsung/${device}/device.mk)
-$(call inherit-product, vendor/evolution/config/common_full_phone.mk)
+\$(call inherit-product, device/samsung/${device}/device.mk)
+\$(call inherit-product, vendor/evolution/config/common_full_phone.mk)
 
 PRODUCT_NAME := evolution_${device}
 PRODUCT_DEVICE := ${device}
