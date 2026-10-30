@@ -67,13 +67,13 @@ chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bi
 chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-size"
 chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar"
 chmod +x "$TMP_ROOT/kernel/samsung/exynos9810/scripts/samsung_bootimg.py"
-printf 'CONFIG_DTS_9810_STAR=y\\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig"
-printf 'Image.samsung: vmlinux scripts dtbs\\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/Makefile"
+printf 'CONFIG_DTS_9810_STAR=y\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig"
+printf 'Image.samsung: vmlinux scripts dtbs\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/Makefile"
 cat > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/boot/Makefile" <<'EOF'
 $(obj)/Image.samsung: $(obj)/Image $(obj)/dt.img $(samsung_bootimg) FORCE
 $(call if_changed,samsung_bundle)
 EOF
-printf 'dtb-$(CONFIG_DTS_9810_STAR) += exynos/exynos9810-starlte_eur_open_26.dtb\\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/boot/dts/Makefile"
+printf 'dtb-$(CONFIG_DTS_9810_STAR) += exynos/exynos9810-starlte_eur_open_26.dtb\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/boot/dts/Makefile"
 cat > "$TMP_ROOT/device/samsung/exynos9810-common/BoardConfigCommon.mk" <<'EOF'
 TARGET_KERNEL_SOURCE := kernel/samsung/exynos9810
 BOARD_KERNEL_IMAGE_NAME := Image.samsung
@@ -102,14 +102,14 @@ if bash "$REPO_ROOT/scripts/verify-starlte-sync.sh" "$TMP_ROOT"; then
 fi
 chmod +x "$TMP_ROOT/kernel/samsung/exynos9810/scripts/samsung_bootimg.py"
 cp "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig" "$TMP_ROOT/starlte_defconfig.bak"
-printf 'CONFIG_DTS_9810_STAR2=y\\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig"
+printf 'CONFIG_DTS_9810_STAR2=y\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig"
 if bash "$REPO_ROOT/scripts/verify-starlte-sync.sh" "$TMP_ROOT"; then
   echo "ERROR: preflight passed with the S9+ DTB selected instead of the S9 DTB." >&2
   exit 1
 fi
 mv "$TMP_ROOT/starlte_defconfig.bak" "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig"
 cp "$TMP_ROOT/device/samsung/exynos9810-common/BoardConfigCommon.mk" "$TMP_ROOT/BoardConfigCommon.mk.bak"
-printf 'TARGET_PREBUILT_KERNEL := prebuilt/Image\\n' >> "$TMP_ROOT/device/samsung/exynos9810-common/BoardConfigCommon.mk"
+printf 'TARGET_PREBUILT_KERNEL := prebuilt/Image\n' >> "$TMP_ROOT/device/samsung/exynos9810-common/BoardConfigCommon.mk"
 if bash "$REPO_ROOT/scripts/verify-starlte-sync.sh" "$TMP_ROOT"; then
   echo "ERROR: preflight passed with a conflicting prebuilt-kernel override." >&2
   exit 1
