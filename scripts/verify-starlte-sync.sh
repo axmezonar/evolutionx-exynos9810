@@ -15,6 +15,10 @@ required_paths=(
   "device/samsung/exynos9810-common/BoardConfigCommon.mk"
   "device/samsung/exynos9810-common/common.mk"
   "kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig"
+  "prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang"
+  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ld"
+  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-objcopy"
+  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ar"
   "vendor/samsung/starlte/BoardConfigVendor.mk"
   "vendor/samsung/starlte/starlte-vendor.mk"
   "vendor/samsung/exynos9810-common/BoardConfigVendor.mk"
@@ -51,4 +55,25 @@ if (( ${#missing[@]} > 0 )); then
   exit 1
 fi
 
-echo "S9 source preflight passed: device tree, kernel defconfig, vendor blobs, Samsung hardware and sepolicy dependencies are present."
+required_executables=(
+  "prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang"
+  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ld"
+  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-objcopy"
+  "prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ar"
+)
+
+missing_executables=()
+for path in "${required_executables[@]}"; do
+  if [[ ! -x "$ANDROID_TOP/$path" ]]; then
+    missing_executables+=("$path")
+  fi
+done
+
+if (( ${#missing_executables[@]} > 0 )); then
+  echo "ERROR: S9 kernel toolchain is incomplete or not executable:" >&2
+  printf "  - %s\\n" "${missing_executables[@]}" >&2
+  echo "Run repo sync again and check the kernel toolchain projects in local_manifests/exynos9810.xml." >&2
+  exit 1
+fi
+
+echo "S9 source preflight passed: device tree, Samsung boot packer, kernel defconfig, Clang/GCC toolchains, vendor blobs, hardware and sepolicy dependencies are present."
