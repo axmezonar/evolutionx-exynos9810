@@ -41,7 +41,7 @@ git clone -b s9-bringup https://github.com/axmezonar/evolutionx-exynos9810.git
 
 ## Prepare and build the S9
 
-Run this from the Android source root. The build script first checks that the full S9 source set is synced, adds the Evolution X product while preserving the Lineage lunch target, then runs `envsetup`, lunch and the build:
+Run this from the Android source root. The build script first checks that the full S9 source set is synced, preserves the upstream `lineage_starlte` product, adds Evolution X's Android 17 `cp2a` lunch choices, then runs `envsetup`, lunch and the Evolution build target:
 
 ```bash
 BUILD_JOBS=4 bash /path/to/evolutionx-exynos9810/scripts/build-starlte.sh "$PWD"
@@ -58,11 +58,11 @@ Or build manually after those two preparation commands:
 
 ```bash
 source build/envsetup.sh
-lunch evolution_starlte-userdebug
-mka bacon -j4
+lunch lineage_starlte-cp2a-userdebug
+m -j4 evolution
 ```
 
-Expected lunch target: `evolution_starlte-userdebug`.
+Expected lunch target: `lineage_starlte-cp2a-userdebug`. Evolution X's current `cnb` manifest uses the `lineage_<codename>-cp2a-<variant>` form and builds with `m evolution`; `EVO_BUILD_TYPE` defaults to `Unofficial` in the current vendor config.
 
 ## Validation sequence
 
@@ -79,7 +79,7 @@ Keep a known-good stock firmware and a recovery path available. Do not flash an 
 
 ## Current completion status
 
-The S9 source integration and product-definition scaffolding are present. Static CI checks cover shell syntax, the S9 product generation and XML well-formedness. **No Android ROM build, emulator run, boot test or physical hardware test has been performed in this environment.** The ROM is therefore not finished or safe to distribute yet; compiler output and device logs will drive the next porting fixes.
+The S9 source integration and product-definition scaffolding are present. Static CI checks cover shell syntax, S9 lunch-choice generation, idempotence, required source paths and XML well-formedness. **No Android ROM build, emulator run, boot test or physical hardware test has been performed in this environment.** The ROM is therefore not finished or safe to distribute yet; compiler output and device logs will drive the next porting fixes.
 
 ## Scope
 
