@@ -17,6 +17,10 @@ device/samsung/starlte/lineage_starlte.mk
 device/samsung/exynos9810-common/BoardConfigCommon.mk
 device/samsung/exynos9810-common/common.mk
 kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig
+prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ld
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-objcopy
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ar
 vendor/samsung/starlte/BoardConfigVendor.mk
 vendor/samsung/starlte/starlte-vendor.mk
 vendor/samsung/exynos9810-common/BoardConfigVendor.mk
@@ -39,8 +43,20 @@ device/lineage/sepolicy/exynos/sepolicy.mk
 device/lineage/sepolicy/libion/sepolicy.mk
 EOF
 
+chmod +x "$TMP_ROOT/prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ld"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-objcopy"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-ar"
+
 bash -n "$REPO_ROOT/scripts/verify-starlte-sync.sh"
 bash "$REPO_ROOT/scripts/verify-starlte-sync.sh" "$TMP_ROOT"
+
+chmod -x "$TMP_ROOT/prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang"
+if bash "$REPO_ROOT/scripts/verify-starlte-sync.sh" "$TMP_ROOT"; then
+  echo "ERROR: preflight passed with a non-executable Clang toolchain." >&2
+  exit 1
+fi
+chmod +x "$TMP_ROOT/prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang"
 rm "$TMP_ROOT/hardware/samsung_slsi-linaro/openmax/Android.bp"
 if bash "$REPO_ROOT/scripts/verify-starlte-sync.sh" "$TMP_ROOT"; then
   echo "ERROR: preflight passed despite a missing required dependency." >&2
