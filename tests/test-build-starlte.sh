@@ -52,6 +52,7 @@ chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bi
 chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld"
 chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-objcopy"
 chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar"
+chmod +x "$TMP_ROOT/kernel/samsung/exynos9810/scripts/samsung_bootimg.py"
 
 cat > "$TMP_ROOT/device/samsung/starlte/BoardConfig.mk" <<'EOF'
 TARGET_KERNEL_CONFIG := exynos9810-starlte_defconfig
