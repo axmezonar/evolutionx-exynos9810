@@ -21,7 +21,7 @@ The device/kernel/vendor trees are on the upstream ExyHyperBrick `lineage-24.0` 
 
 A 64-bit Arch Linux host with at least 300–400 GB free SSD is recommended for a full source checkout and build. 32 GB RAM is workable; use a modest parallelism setting and sufficient swap. Start with `BUILD_JOBS=4` and `KERNEL_JOBS=4` on a 32 GB machine. The local manifest syncs the AArch64 GCC 4.9 cross-compiler and binutils used by the upstream legacy kernel build rule. The `cnb` manifest syncs OpenJDK 21 and OpenJDK 25 prebuilts. Soong selects the build JDK from the release configuration; do not force your system `JAVA_HOME` to an arbitrary version. Your system having Java 25 only should not, by itself, block this build.
 
-Install the Android build prerequisites from the current Android/Lineage build documentation and make sure `repo`, Git, Python 3, Git LFS, and standard build utilities are available.
+Install the Android build prerequisites from the current Android/Lineage build documentation and make sure `repo`, Git, Python, Git LFS, and standard build utilities are available. **Important for this legacy kernel:** the pinned GCC 4.9 wrapper uses an absolute `/usr/bin/python` shebang. On Arch, install the official `python` package (`sudo pacman -S python`) and verify `test -x /usr/bin/python` before starting the kernel build.
 
 ## Sync the Android 17 source
 
