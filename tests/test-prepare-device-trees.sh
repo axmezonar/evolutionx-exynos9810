@@ -10,7 +10,9 @@ cat > "$TMP_ROOT/device/samsung/starlte/device.mk" <<'EOF'
 # fake tree for script validation
 EOF
 cat > "$TMP_ROOT/device/samsung/starlte/lineage_starlte.mk" <<'EOF'
-# fake tree for script validation
+PRODUCT_NAME := lineage_starlte
+PRODUCT_DEVICE := starlte
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 EOF
 cat > "$TMP_ROOT/device/samsung/starlte/AndroidProducts.mk" <<'EOF'
 PRODUCT_MAKEFILES := \
@@ -25,10 +27,12 @@ bash -n "$REPO_ROOT/scripts/build-starlte.sh"
 bash "$REPO_ROOT/scripts/prepare-device-trees.sh" "$TMP_ROOT"
 bash "$REPO_ROOT/scripts/prepare-device-trees.sh" "$TMP_ROOT"
 
-grep -Fq '$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)' "$TMP_ROOT/device/samsung/starlte/evolution_starlte.mk"
-grep -Fq 'PRODUCT_MODEL := SM-G960F' "$TMP_ROOT/device/samsung/starlte/evolution_starlte.mk"
-grep -Fq '$(call inherit-product, vendor/lineage/config/common_full_phone.mk)' "$TMP_ROOT/device/samsung/starlte/evolution_starlte.mk"
-grep -Fq '$(LOCAL_DIR)/evolution_starlte.mk' "$TMP_ROOT/device/samsung/starlte/AndroidProducts.mk"
-test "$(grep -Fc '$(LOCAL_DIR)/evolution_starlte.mk' "$TMP_ROOT/device/samsung/starlte/AndroidProducts.mk")" -eq 1
-grep -Fq 'lineage_starlte.mk' "$TMP_ROOT/device/samsung/starlte/AndroidProducts.mk"
-echo "S9 product preparation tests passed."
+grep -Fq 'PRODUCT_NAME := lineage_starlte' "$TMP_ROOT/device/samsung/starlte/lineage_starlte.mk"
+grep -Fq '$(call inherit-product, vendor/lineage/config/common_full_phone.mk)' "$TMP_ROOT/device/samsung/starlte/lineage_starlte.mk"
+grep -Fq 'lineage_starlte-cp2a-user' "$TMP_ROOT/device/samsung/starlte/AndroidProducts.mk"
+grep -Fq 'lineage_starlte-cp2a-userdebug' "$TMP_ROOT/device/samsung/starlte/AndroidProducts.mk"
+test "$(grep -Fc 'lineage_starlte-cp2a-userdebug' "$TMP_ROOT/device/samsung/starlte/AndroidProducts.mk")" -eq 1
+test ! -e "$TMP_ROOT/device/samsung/starlte/evolution_starlte.mk"
+grep -Fq 'lineage_starlte-cp2a-userdebug' "$REPO_ROOT/scripts/build-starlte.sh"
+grep -Fq 'm -j"${BUILD_JOBS:-4}" evolution' "$REPO_ROOT/scripts/build-starlte.sh"
+echo "S9 cnb/cp2a product preparation tests passed."
