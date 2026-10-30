@@ -24,6 +24,7 @@ kernel/samsung/exynos9810/arch/arm64/boot/dts/Makefile
 kernel/samsung/exynos9810/arch/arm64/boot/Makefile
 kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig
 kernel/samsung/exynos9810/scripts/samsung_bootimg.py
+prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang
 vendor/samsung/starlte/BoardConfigVendor.mk
 vendor/samsung/starlte/starlte-vendor.mk
 vendor/samsung/exynos9810-common/BoardConfigVendor.mk
@@ -44,30 +45,29 @@ hardware/lineage/generic-ims/ims.mk
 device/samsung_slsi/sepolicy/sepolicy.mk
 device/lineage/sepolicy/exynos/sepolicy.mk
 device/lineage/sepolicy/libion/sepolicy.mk
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-gcc
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-objcopy
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-as
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-nm
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-objdump
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-strip
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ranlib
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-readelf
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-size
-prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-ld
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-objcopy
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-as
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-nm
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-objdump
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-strip
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-ranlib
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-readelf
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-size
+prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-ar
 EOF
 
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-gcc"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ld"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-objcopy"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-as"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-nm"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-objdump"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-strip"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ranlib"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-readelf"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-size"
-chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-ld"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-objcopy"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-as"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-nm"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-objdump"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-strip"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-ranlib"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-readelf"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-size"
+chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-androidkernel-4.9/bin/aarch64-linux-androidkernel-ar"
+chmod +x "$TMP_ROOT/prebuilts/clang/kernel/linux-x86/clang-r416183b/bin/clang"
 chmod +x "$TMP_ROOT/kernel/samsung/exynos9810/scripts/samsung_bootimg.py"
 printf 'CONFIG_DTS_9810_STAR=y\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/configs/exynos9810-starlte_defconfig"
 printf 'Image.samsung: vmlinux scripts dtbs\n' > "$TMP_ROOT/kernel/samsung/exynos9810/arch/arm64/Makefile"
@@ -176,9 +176,11 @@ test -s "$PRODUCT_KERNEL"
 grep -Fq 'mock Samsung kernel container' "$PRODUCT_KERNEL"
 grep -Fq 'exynos9810-starlte_defconfig' "$MOCK_MAKE_LOG"
 grep -Fq 'Image.samsung' "$MOCK_MAKE_LOG"
-grep -Fq 'CROSS_COMPILE=aarch64-linux-android-' "$MOCK_MAKE_LOG"
+grep -Fq 'CROSS_COMPILE=aarch64-linux-androidkernel-' "$MOCK_MAKE_LOG"
 grep -Fq 'ARCH=arm64' "$MOCK_MAKE_LOG"
 grep -Fq 'SAMSUNG_BOOT_PAGESIZE=2048' "$MOCK_MAKE_LOG"
+grep -Fq 'CLANG_TRIPLE=aarch64-linux-gnu-' "$MOCK_MAKE_LOG"
+grep -Fq 'CC=' "$MOCK_MAKE_LOG"
 grep -Fq -- '-j2' "$MOCK_MAKE_LOG"
 grep -Fq -- '-j2 evolution' "$MOCK_ROM_TARGET"
 
