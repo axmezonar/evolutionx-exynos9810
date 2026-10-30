@@ -15,4 +15,6 @@
   <project name="ExyHyperBrick/android_hardware_samsung_slsi-linaro_config" path="hardware/samsung_slsi-linaro/config" revision="lineage-21" />
   <project name="ExyHyperBrick/android_hardware_samsung_slsi-linaro_exynos" path="hardware/samsung_slsi-linaro/exynos" revision="lineage-23.2" />
   <project name="ExyHyperBrick/android_hardware_samsung_slsi-linaro_graphics" path="hardware/samsung_slsi-linaro/graphics" revision="lineage-21" />
+  <project name="LineageOS/android_hardware_samsung_slsi-linaro_interfaces" path="hardware/samsung_slsi-linaro/interfaces" revision="lineage-24.0" />
+  <project name="LineageOS/android_hardware_samsung_slsi-linaro_openmax" path="hardware/samsung_slsi-linaro/openmax" revision="lineage-24.0" />
 </manifest>
