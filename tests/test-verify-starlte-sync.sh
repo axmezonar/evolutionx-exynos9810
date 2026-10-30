@@ -51,6 +51,17 @@ chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bi
 chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-objcopy"
 chmod +x "$TMP_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-ar"
 chmod +x "$TMP_ROOT/kernel/samsung/exynos9810/scripts/samsung_bootimg.py"
+cat > "$TMP_ROOT/device/samsung/exynos9810-common/BoardConfigCommon.mk" <<'EOF'
+TARGET_KERNEL_SOURCE := kernel/samsung/exynos9810
+BOARD_KERNEL_IMAGE_NAME := Image.samsung
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_CUSTOM_MKBOOTIMG := $(TARGET_KERNEL_SOURCE)/scripts/samsung_bootimg.py
+TARGET_KERNEL_ADDITIONAL_FLAGS += SAMSUNG_BOOT_PAGESIZE=$(BOARD_KERNEL_PAGESIZE)
+BOARD_MKBOOTIMG_ARGS := --header_version 0 \
+    --kernel_offset $(BOARD_KERNEL_OFFSET) \
+    --ramdisk_offset $(BOARD_KERNEL_RAMDISK_OFFSET) \
+    --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+EOF
 
 bash -n "$REPO_ROOT/scripts/verify-starlte-sync.sh"
 bash "$REPO_ROOT/scripts/verify-starlte-sync.sh" "$TMP_ROOT"
