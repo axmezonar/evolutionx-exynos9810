@@ -23,7 +23,7 @@ for device in crownlte starlte star2lte; do
 PRODUCT_NAME := evolution_\${device}
 PRODUCT_DEVICE := \${device}
 PRODUCT_BRAND := samsung
-PRODUCT_MODEL := \${models[$device]}
+PRODUCT_MODEL := ${models[$device]}
 PRODUCT_MANUFACTURER := samsung
 PRODUCT_GMS_CLIENTID_BASE := android-samsung
 EOF
